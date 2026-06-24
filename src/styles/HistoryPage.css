@@ -1,0 +1,135 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — History Page Stylesheet
+   ═══════════════════════════════════════════════════════════════ */
+
+.history-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: var(--space-8);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Header Row */
+.history-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.history-title-section h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.history-title-section p {
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Total counter box */
+.history-counter-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.history-counter-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  fontWeight: 600;
+}
+
+.history-counter-badge {
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* Actions in Table */
+.history-actions-wrapper {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.history-action-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.history-action-btn.view {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: none;
+}
+
+.history-action-btn.view:hover {
+  background: var(--primary-light);
+}
+
+.history-action-btn.edit {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.history-action-btn.edit:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-page);
+}
+
+.history-action-btn.delete {
+  background: var(--bg-card);
+  color: var(--danger);
+  border: 1px solid var(--border);
+}
+
+.history-action-btn.delete:hover {
+  border-color: var(--danger);
+  background: #fef2f2;
+}
+
+/* Modal Specific Layout */
+.history-modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.history-modal-preview-wrapper {
+  background: var(--bg-page);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,529 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — Booking Database Page Stylesheet
+   ═══════════════════════════════════════════════════════════════ */
+
+.db-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: var(--space-8);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Analytics Strip */
+.db-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.db-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.db-kpi-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.db-kpi-card.success-border {
+  border-left: 4px solid var(--success);
+}
+
+.db-kpi-card.primary-border {
+  border-left: 4px solid var(--primary);
+}
+
+.db-kpi-card.danger-border {
+  border-left: 4px solid var(--danger);
+}
+
+.db-kpi-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.db-kpi-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.db-kpi-value.success-text {
+  color: var(--success);
+}
+
+.db-kpi-value.danger-text {
+  color: var(--danger);
+}
+
+.db-kpi-footer {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+/* Status toggler in database table */
+.status-toggle-btn {
+  padding: var(--space-1) var(--space-3);
+  font-size: 11px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  min-height: 26px;
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.status-toggle-btn:hover {
+  transform: scale(1.02);
+}
+
+.status-toggle-btn.delivered {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.status-toggle-btn.pending {
+  background: var(--primary-bg);
+  color: var(--primary);
+}
+
+/* Row Action Buttons */
+.table-actions-container {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+.action-row-btn {
+  padding: 4px 8px;
+  font-size: 11px;
+  min-height: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.action-row-btn:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-page);
+}
+
+.action-row-btn.view-btn {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: none;
+}
+
+.action-row-btn.view-btn:hover {
+  background: var(--primary-light);
+}
+
+.action-row-btn.delete-btn {
+  color: var(--danger);
+}
+
+.action-row-btn.delete-btn:hover {
+  border-color: var(--danger);
+  background: #fef2f2;
+}
+
+/* Split layout grid for Reports and Dues */
+.db-reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.report-section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.report-card-title {
+  margin: 0 0 var(--space-4) 0;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.report-inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.report-inputs-row label {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+.report-inputs-row input {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.report-buttons-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.report-summary-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.report-summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: 12px;
+}
+
+.report-summary-item:last-child {
+  margin-bottom: 0;
+  border-top: 1px dashed var(--border);
+  padding-top: var(--space-2);
+}
+
+/* Method Summary list */
+.payment-method-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.payment-method-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: var(--space-2);
+}
+
+/* Dues Reminders Card */
+.dues-reminders-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dues-card-header-bar {
+  background: var(--danger);
+  padding: var(--space-3) var(--space-5);
+  color: white;
+}
+
+.dues-card-header-bar h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dues-list-scrollable {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.dues-table-view {
+  font-size: 12px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dues-table-view th {
+  padding: var(--space-2);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.dues-table-view td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.dues-reminder-btn {
+  padding: var(--space-1) var(--space-3);
+  font-size: 11px;
+  background: #25D366;
+  border: none;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  min-height: 26px;
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.dues-reminder-btn:hover {
+  opacity: 0.9;
+}
+
+/* Modal specific UI additions */
+.modal-timeline-container {
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-4);
+}
+
+.modal-timeline-title {
+  margin: 0 0 var(--space-3) 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Info grid inside details modal */
+.modal-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  background: var(--bg-page);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+}
+
+.modal-details-col-title {
+  margin: 0 0 var(--space-2) 0;
+  color: var(--primary);
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  font-weight: 700;
+}
+
+.modal-section-subtitle {
+  margin: var(--space-4) 0 var(--space-2) 0;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Double block breakdown */
+.modal-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: 12.5px;
+}
+
+.pricing-summary-card {
+  background: var(--primary-bg);
+  border: 1px solid var(--border);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.pricing-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.pricing-summary-row.total-row {
+  font-weight: 800;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-2);
+  font-size: 13.5px;
+}
+
+/* Payment history action row */
+.payment-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.payment-add-btn {
+  background: var(--success);
+  color: #fff;
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  font-size: 11.5px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  min-height: 30px;
+  transition: opacity 0.2s ease;
+}
+
+.payment-add-btn:hover {
+  opacity: 0.9;
+}
+
+/* Sub-form overlay styling */
+.payment-form-overlay-card {
+  border: 1px dashed var(--success);
+  padding: var(--space-4);
+  background: var(--bg-page);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  font-size: 12.5px;
+}
+
+.payment-form-overlay-title {
+  margin: 0 0 var(--space-3) 0;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.payment-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.payment-form-grid-2 label {
+  display: block;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.payment-form-grid-2 input, 
+.payment-form-grid-2 select {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.payment-form-single-col {
+  margin-bottom: var(--space-3);
+}
+
+.payment-form-single-col label {
+  display: block;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.payment-form-single-col input {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Action toolbar in footer */
+.modal-actions-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+
+/* Print controls */
+.print-format-selector {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.print-format-btn {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.print-format-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.print-format-btn:not(.active) {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.print-format-btn:not(.active):hover {
+  background: var(--border-light);
+}
+
+.whatsapp-share-button {
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.whatsapp-share-button:hover {
+  opacity: 0.9;
+}

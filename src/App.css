@@ -1,0 +1,233 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — Modern SaaS Layout & Shell Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Layout Shell Adaptations */
+.kvu-app-shell {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.kvu-main-content {
+  flex: 1;
+  padding: var(--space-5);
+  background-color: var(--bg-page);
+  overflow-y: auto;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.kvu-main-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  margin-left: 260px;
+  transition: margin-left 200ms ease;
+}
+
+.kvu-main-container.sidebar-collapsed {
+  margin-left: 72px;
+}
+
+@media (max-width: 1024px) {
+  .kvu-main-container {
+    margin-left: 0 !important;
+  }
+}
+
+/* Sidebar Styles */
+.kvu-sidebar {
+  display: flex;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 150ms ease;
+  min-height: 38px;
+  position: relative;
+}
+
+.sidebar-link:hover {
+  background-color: var(--primary-bg);
+  color: var(--primary);
+}
+
+.sidebar-link.active {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+}
+
+.kvu-sidebar.collapsed .sidebar-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  margin-left: 0;
+  min-width: 14px;
+  height: 14px;
+  font-size: 9px;
+}
+
+.kvu-sidebar.collapsed .sidebar-link {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* Hide Mobile Elements on Desktop */
+.mobile-bottom-nav,
+.mobile-nav-item,
+.mobile-drawer-link {
+  display: none;
+}
+
+/* Responsive Rules */
+@media (max-width: 1024px) {
+  .kvu-app-shell {
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+
+  .kvu-main-content {
+    height: auto;
+    min-height: 100vh;
+    padding: var(--space-4);
+  }
+
+  /* Hide Desktop Sidebar */
+  .kvu-sidebar {
+    display: none !important;
+  }
+
+  /* Show Mobile Nav */
+  .mobile-bottom-nav {
+    display: flex !important;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    gap: 3px;
+    padding: 4px;
+    flex: 1;
+    min-height: 48px;
+    transition: color 150ms ease;
+  }
+
+  .mobile-nav-item.active {
+    color: var(--primary);
+  }
+
+  .mobile-nav-item svg {
+    stroke-width: 2.2;
+  }
+
+  .mobile-drawer-link {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    gap: 8px;
+    text-align: center;
+    position: relative;
+    transition: all 150ms ease;
+  }
+
+  .mobile-drawer-link:active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .mobile-drawer-link.active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .mobile-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: var(--primary);
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Base Form Control Variables overrides for compatibility */
+input, select, textarea {
+  border-radius: var(--radius-sm) !important;
+  border-color: var(--border) !important;
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Dark theme status modifications */
+[data-theme="dark"] input, 
+[data-theme="dark"] select, 
+[data-theme="dark"] textarea {
+  background-color: var(--bg-page) !important;
+  border-color: var(--border) !important;
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

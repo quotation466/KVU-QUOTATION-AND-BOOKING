@@ -1,0 +1,330 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — Shared LineItemsEditor Stylesheet
+   Used by QuotationPage & BookingsPage
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Wrapper ───────────────────────────────────────────────────── */
+.lie-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Preset Chips (Quotation mode) ─────────────────────────────── */
+.lie-presets-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.lie-chip-group {
+  margin-bottom: 12px;
+}
+
+.lie-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lie-chip {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.lie-chip:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.lie-chip.feed {
+  background: #fef9c3;
+  color: #854d0e;
+  border-color: #fde68a;
+}
+.lie-chip.feed:hover { background: #ca8a04; color: #fff; border-color: #ca8a04; }
+
+.lie-chip.atta {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.lie-chip.atta:hover { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+/* ── Add Item Form Row ──────────────────────────────────────────── */
+.lie-form {
+  display: contents;
+}
+
+.lie-add-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.7fr 1fr auto;
+  gap: var(--space-3);
+  align-items: end;
+}
+
+@media (max-width: 768px) {
+  .lie-add-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lie-add-row > *:first-child {
+    grid-column: 1 / -1;
+  }
+  .lie-add-row > .lie-add-btn-wrap {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+
+/* Autocomplete wrapper */
+.lie-autocomplete-wrap {
+  position: relative;
+}
+
+.lie-autocomplete-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 500;
+  max-height: 240px;
+  overflow-y: auto;
+  animation: lieDropFade 0.12s ease;
+}
+
+@keyframes lieDropFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lie-autocomplete-item {
+  padding: 9px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s ease;
+}
+.lie-autocomplete-item:last-child { border-bottom: none; }
+.lie-autocomplete-item:hover { background: var(--primary-bg); }
+
+.lie-ac-main {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.lie-ac-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Field labels */
+.lie-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.lie-rate-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lie-gst-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Input overrides */
+.lie-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+.lie-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-bg);
+}
+
+.lie-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  min-height: 54px;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.lie-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-bg);
+}
+
+/* Description below row (booking mode) */
+.lie-desc-below {
+  margin-top: -4px;
+}
+
+/* Add button */
+.lie-add-btn-wrap {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 1px;
+}
+
+.lie-add-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+.lie-add-btn:hover { opacity: 0.88; }
+
+/* ── Items Table ────────────────────────────────────────────────── */
+.lie-table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.lie-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.lie-table thead th {
+  background: var(--bg-page);
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.lie-table thead th.center { text-align: center; }
+.lie-table thead th.right  { text-align: right;  }
+
+.lie-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+.lie-table tbody tr:last-child td { border-bottom: none; }
+.lie-table tbody tr:hover { background: var(--bg-page); }
+
+.lie-table td.center { text-align: center; }
+.lie-table td.right  { text-align: right;  font-weight: 600; }
+
+.lie-item-name {
+  font-weight: 600;
+  font-size: 13px;
+}
+.lie-item-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Subtotal row */
+.lie-subtotal-row td {
+  background: var(--bg-page);
+  font-weight: 700;
+  border-top: 1px solid var(--border);
+}
+.lie-subtotal-label {
+  text-align: right;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+  padding-right: 8px;
+}
+.lie-subtotal-amount {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Empty state */
+.lie-empty {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* Delete item button */
+.lie-del-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.lie-del-btn:hover {
+  background: #fef2f2;
+  border-color: var(--danger);
+  color: var(--danger);
+}

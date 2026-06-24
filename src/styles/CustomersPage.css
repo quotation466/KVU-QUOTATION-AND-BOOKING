@@ -1,0 +1,492 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — Customers & Booking Customers Stylesheet
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Container */
+.crm-customers-container,
+.booking-cust-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: var(--space-8);
+  animation: fadeIn 0.3s ease;
+}
+
+/* CRM Customers Header Section */
+.crm-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.crm-title-section h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.crm-title-section p {
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.crm-add-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.crm-add-btn:hover {
+  opacity: 0.9;
+}
+
+/* CRM Action Buttons in Table */
+.crm-actions-wrapper {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.crm-action-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.crm-action-btn.use {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: none;
+}
+
+.crm-action-btn.use:hover {
+  background: var(--primary-light);
+}
+
+.crm-action-btn.edit {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.crm-action-btn.edit:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-page);
+}
+
+.crm-action-btn.delete {
+  background: var(--bg-card);
+  color: var(--danger);
+  border: 1px solid var(--border);
+}
+
+.crm-action-btn.delete:hover {
+  border-color: var(--danger);
+  background: #fef2f2;
+}
+
+/* ── CRM Action Chooser Popover ─────────────────────────────────── */
+.crm-action-popover {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+  min-width: 280px;
+  overflow: hidden;
+  animation: popoverFadeIn 0.15s ease;
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.crm-action-popover-header {
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crm-action-popover-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.crm-action-popover-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.crm-action-popover-options {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 4px;
+}
+
+.crm-popover-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all 0.15s ease;
+}
+
+.crm-popover-option:hover {
+  background: var(--bg-page);
+  border-color: var(--border);
+}
+
+.crm-popover-option.quotation:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.crm-popover-option.booking:hover {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.crm-popover-option-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quotation-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.booking-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.crm-popover-option-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crm-popover-option-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.crm-popover-option-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.crm-popover-option svg:last-child {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+
+/* -------------------------------------------------------------
+   Booking Customers Styles
+   ------------------------------------------------------------- */
+
+/* KPI Dashboard Strip */
+.booking-cust-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.booking-cust-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.booking-cust-kpi-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.booking-cust-kpi-card.primary-border {
+  border-left: 4px solid var(--primary);
+}
+
+.booking-cust-kpi-card.success-border {
+  border-left: 4px solid var(--success);
+}
+
+.booking-cust-kpi-card.danger-border {
+  border-left: 4px solid var(--danger);
+}
+
+.booking-cust-kpi-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.booking-cust-kpi-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.booking-cust-kpi-value.primary-text {
+  color: var(--primary);
+}
+
+.booking-cust-kpi-value.success-text {
+  color: var(--success);
+}
+
+.booking-cust-kpi-value.danger-text {
+  color: var(--danger);
+}
+
+.booking-cust-kpi-footer {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+/* Header bar in Ledger Modal */
+.ledger-cust-profile-banner {
+  background: var(--primary-bg);
+  padding: 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--border);
+}
+
+.ledger-cust-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.ledger-profile-item span {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  display: block;
+}
+
+.ledger-profile-item strong {
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.ledger-profile-item .sub-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* Quick Stats Panel for a Single Customer in Ledger */
+.ledger-cust-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: var(--space-4);
+}
+
+.ledger-stat-card {
+  background: var(--bg-page);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.ledger-stat-card span {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: block;
+}
+
+.ledger-stat-card strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.ledger-stat-card.primary-text strong {
+  color: var(--primary);
+}
+
+.ledger-stat-card.success-text strong {
+  color: var(--success);
+}
+
+.ledger-stat-card.danger-text {
+  background: var(--primary-bg);
+}
+
+.ledger-stat-card.danger-text span {
+  color: var(--danger);
+}
+
+.ledger-stat-card.danger-text strong {
+  color: var(--danger);
+}
+
+.ledger-stat-card.success-bg-text span {
+  color: var(--success);
+}
+
+.ledger-stat-card.success-bg-text strong {
+  color: var(--success);
+}
+
+/* Tabs System */
+.ledger-tabs-row {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+
+.ledger-tab-btn {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.ledger-tab-btn:hover {
+  color: var(--primary);
+}
+
+.ledger-tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Table styles inside Modal scrollable wrapper */
+.ledger-scrollable-table {
+  max-height: 45vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.ledger-table {
+  font-size: 12.5px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ledger-table th {
+  padding: 8px;
+  background: var(--bg-table-hdr);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.ledger-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Receipt mini actions button */
+.receipt-mini-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.receipt-mini-btn {
+  padding: 2px 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.receipt-mini-btn:hover {
+  background: var(--bg-page);
+  border-color: var(--border-medium);
+}
+
+.receipt-mini-btn.primary {
+  color: var(--primary);
+  background: var(--primary-bg);
+  border-color: var(--primary-light);
+}
+
+.receipt-mini-btn.primary:hover {
+  background: var(--primary-light);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

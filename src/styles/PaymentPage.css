@@ -1,0 +1,351 @@
+/* ═══════════════════════════════════════════════════════════════
+   KVU ERP — Payment Page Stylesheet
+   ═══════════════════════════════════════════════════════════════ */
+
+.payments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: var(--space-8);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Collections KPI Grid */
+.payments-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.payments-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payments-kpi-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.payments-kpi-card.success-border {
+  border-left: 4px solid var(--success);
+}
+
+.payments-kpi-card.primary-border {
+  border-left: 4px solid var(--primary);
+}
+
+.payments-kpi-card.dark-border {
+  border-left: 4px solid var(--text-primary);
+}
+
+.payments-kpi-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.payments-kpi-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.payments-kpi-value.success-text {
+  color: var(--success);
+}
+
+.payments-kpi-value.primary-text {
+  color: var(--primary);
+}
+
+.payments-kpi-footer {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+/* Filter Panel styling */
+.payments-filter-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.payments-panel-title {
+  margin: 0 0 var(--space-4) 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.payments-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.payments-filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.payments-filter-item label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.payments-filter-item input,
+.payments-filter-item select {
+  height: 38px;
+  font-size: 12.5px;
+  width: 100%;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.payments-filter-item input:focus,
+.payments-filter-item select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Reset Button */
+.payments-reset-btn {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 12.5px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  height: 38px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.payments-reset-btn:hover {
+  background: var(--border-light);
+  border-color: var(--border-medium);
+}
+
+/* Form Styles for Modals */
+.modal-form-wrapper {
+  font-size: 12.5px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.modal-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.modal-form-grid-3 {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-3);
+}
+
+.modal-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-form-field label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.modal-form-field input,
+.modal-form-field select {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 13px;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+
+.modal-form-field input:focus,
+.modal-form-field select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.modal-actions-container {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+}
+
+/* Print Modal styling */
+.print-format-bar {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.print-format-tab-btn {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.print-format-tab-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.print-format-tab-btn:not(.active) {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.print-format-tab-btn:not(.active):hover {
+  background: var(--border-light);
+}
+
+.print-preview-box {
+  max-height: 60vh;
+  overflow: auto;
+  padding: var(--space-4);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* WhatsApp Share Button */
+.whatsapp-share-btn {
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.whatsapp-share-btn:hover {
+  background: #20ba59;
+}
+
+/* Table Column Enhancements */
+.payment-method-badge {
+  background: var(--primary-bg);
+  color: var(--primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.payment-details-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.payment-actions-wrapper {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.payment-row-btn {
+  padding: 4px 8px;
+  font-size: 11px;
+  min-height: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.payment-row-btn.print {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: none;
+}
+
+.payment-row-btn.print:hover {
+  background: var(--primary-light);
+}
+
+.payment-row-btn.edit {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+.payment-row-btn.edit:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-page);
+}
+
+.payment-row-btn.delete {
+  background: var(--bg-card);
+  color: var(--danger);
+}
+
+.payment-row-btn.delete:hover {
+  border-color: var(--danger);
+  background: #fef2f2;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

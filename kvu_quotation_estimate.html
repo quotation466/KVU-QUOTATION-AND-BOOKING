@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KVU Traditional Estimate / Quotation Template</title>
+<style>
+  /* ===== Page Setup ===== */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  :root {
+    --border-dark: #000000;
+    --border-light: #444444;
+    --font-family: 'Courier New', Courier, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #f3f4f6;
+    font-family: var(--font-family);
+    color: #000000;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* Simulated A4 portrait page in browser */
+  .a4-portrait-page {
+    width: 210mm;
+    height: 297mm;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 10mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* ===== Headers & Typography ===== */
+  .estimate-tag {
+    font-size: 13pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2mm;
+  }
+
+  .company-header-block {
+    text-align: center;
+    margin-bottom: 4mm;
+  }
+
+  .company-title {
+    font-size: 26pt;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    line-height: 1.1;
+  }
+
+  .company-sub {
+    font-size: 10pt;
+    margin-top: 1mm;
+    letter-spacing: 0.5px;
+  }
+
+  /* Bordered tables and boxes */
+  .bordered-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1.5px solid var(--border-dark);
+    margin-bottom: 3mm;
+  }
+
+  .bordered-table td {
+    padding: 2.5mm 3.5mm;
+    border: 1px solid var(--border-dark);
+    vertical-align: top;
+    font-size: 9.5pt;
+    line-height: 1.5;
+  }
+
+  /* Specific Customer Table Layout */
+  .cust-left-col {
+    width: 60%;
+  }
+
+  .cust-right-col {
+    width: 40%;
+  }
+
+  /* Machine Details Strip */
+  .machine-specs-box {
+    border: 1.5px solid var(--border-dark);
+    padding: 2.5mm 3.5mm;
+    margin-bottom: 3.5mm;
+    font-size: 9.5pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2mm 4mm;
+  }
+
+  .spec-field {
+    white-space: nowrap;
+  }
+
+  /* Particulars Table */
+  .particulars-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1.5px solid var(--border-dark);
+    flex: 1;
+    margin-bottom: 3mm;
+  }
+
+  .particulars-table th {
+    font-size: 9.5pt;
+    font-weight: bold;
+    border: 1px solid var(--border-dark);
+    border-bottom: 1.5px solid var(--border-dark);
+    padding: 2mm 1mm;
+    text-transform: uppercase;
+  }
+
+  .particulars-table td {
+    padding: 1.2mm 2mm;
+    border-left: 1px solid var(--border-dark);
+    border-right: 1px solid var(--border-dark);
+    font-size: 9.5pt;
+    line-height: 1;
+  }
+
+  /* Specific columns borders */
+  .particulars-table tr {
+    height: 6.8mm;
+  }
+
+  .particulars-table tr.table-header-row {
+    height: auto;
+  }
+
+  .particulars-table td.col-particulars {
+    width: 52%;
+    text-align: left;
+  }
+
+  .particulars-table td.col-qty {
+    width: 10%;
+    text-align: center;
+  }
+
+  .particulars-table td.col-rate {
+    width: 18%;
+    text-align: right;
+  }
+
+  .particulars-table td.col-amount {
+    width: 20%;
+    text-align: right;
+  }
+
+  /* Empty table filler lines */
+  .particulars-table tr.item-row td {
+    border-bottom: 1px dashed #cccccc; /* light indicator inside rows */
+  }
+
+  .particulars-table tr.total-row-strip {
+    height: auto;
+  }
+
+  .particulars-table tr.total-row-strip td {
+    border-top: 1.5px solid var(--border-dark);
+    border-bottom: 1px solid var(--border-dark);
+    font-weight: bold;
+    padding: 2mm 2mm;
+  }
+
+  /* Amount in Words box */
+  .amount-words-box {
+    border: 1.5px solid var(--border-dark);
+    padding: 2.5mm 3.5mm;
+    font-size: 9.5pt;
+    margin-bottom: 3mm;
+  }
+
+  /* Summary & Footer section layout */
+  .bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 5mm;
+  }
+
+  .footer-left {
+    width: 58%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 8pt;
+    line-height: 1.5;
+  }
+
+  .footer-right-summary {
+    width: 38%;
+    border: 1.5px solid var(--border-dark);
+    padding: 2.5mm 3.5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8mm;
+  }
+
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5pt;
+    align-items: center;
+  }
+
+  .summary-line .lbl {
+    font-weight: bold;
+  }
+
+  .summary-line .val {
+    text-align: right;
+  }
+
+  /* Signature details block */
+  .signature-area {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 10mm;
+  }
+
+  .signature-line {
+    width: 45mm;
+    border-top: 1px solid var(--border-dark);
+    margin-bottom: 1.5mm;
+  }
+
+  .signature-label {
+    width: 45mm;
+    text-align: center;
+    font-size: 9pt;
+    font-weight: bold;
+  }
+
+  /* Print Action Button (Web View only) */
+  .action-panel {
+    margin-top: 20px;
+    z-index: 100;
+  }
+
+  .btn-print {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: var(--font-family);
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+  }
+
+  .btn-print:hover {
+    background-color: #222222;
+    transform: translateY(-1px);
+  }
+
+  /* ===== Print Mode Styles Override ===== */
+  @media print {
+    body {
+      background-color: #ffffff;
+      padding: 0;
+      min-height: auto;
+    }
+
+    .a4-portrait-page {
+      box-shadow: none;
+      padding: 10mm;
+      margin: 0 auto;
+      page-break-after: avoid;
+      page-break-before: avoid;
+    }
+
+    .action-panel {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Printable A4 page -->
+  <div class="a4-portrait-page">
+    
+    <!-- Top tag -->
+    <div class="estimate-tag">ESTIMATE-[0]</div>
+
+    <!-- Company header center -->
+    <div class="company-header-block">
+      <div class="company-title">KRISHI VIKAS UDYOG</div>
+      <div class="company-sub">Ambedkar Nagar, Uttar Pradesh | Mob: +91 94154 37817</div>
+    </div>
+
+    <!-- Customer details grid -->
+    <table class="bordered-table">
+      <tr>
+        <td class="cust-left-col">
+          M/S. ___________________________________________<br>
+          ________________________________________________<br>
+          ________________________________________________<br>
+          CITY: __________________________________________
+        </td>
+        <td class="cust-right-col">
+          NO.  : ____________________<br>
+          DATE : ____________________<br>
+          DELIVERY DATE: ____________<br>
+          MOBILE : __________________<br>
+                   __________________
+        </td>
+      </tr>
+    </table>
+
+    <!-- Machine specifications strip -->
+    <div class="machine-specs-box">
+      <span class="spec-field">TRACTOR: ________________________</span>
+      <span class="spec-field">CYCLONE: YES / NO</span>
+      <span class="spec-field">JHANNA: YES / NO</span>
+      <span class="spec-field">HP: ______</span>
+      <span class="spec-field">PTO SHAFT: ______</span>
+      <span class="spec-field">PULLY SIZE: ______</span>
+    </div>
+
+    <!-- Particulars Table (17 empty rows) -->
+    <table class="particulars-table">
+      <thead>
+        <tr class="table-header-row">
+          <th style="text-align: left; padding-left: 2mm;">PARTICULARS</th>
+          <th style="text-align: center;">QTY</th>
+          <th style="text-align: right; padding-right: 2mm;">RATE</th>
+          <th style="text-align: right; padding-right: 2mm;">AMOUNT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Row 1 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 2 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 3 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 4 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 5 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 6 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 7 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 8 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 9 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 10 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 11 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 12 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 13 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 14 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 15 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 16 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Row 17 -->
+        <tr class="item-row">
+          <td class="col-particulars">&nbsp;</td>
+          <td class="col-qty">&nbsp;</td>
+          <td class="col-rate">&nbsp;</td>
+          <td class="col-amount">&nbsp;</td>
+        </tr>
+        <!-- Total Row Strip -->
+        <tr class="total-row-strip">
+          <td style="text-align: left; padding-left: 2mm;">TOTAL</td>
+          <td style="text-align: center;">&nbsp;</td>
+          <td style="text-align: right;">&nbsp;</td>
+          <td style="text-align: right; padding-right: 2mm;">₹ _________________</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Amount in Words -->
+    <div class="amount-words-box">
+      Rs. __________________________________________________________________ Only
+    </div>
+
+    <!-- Bottom section: footer notices + summary card -->
+    <div class="bottom-section">
+      
+      <!-- Footer details left -->
+      <div class="footer-left">
+        <div>
+          E.& O.E.<br>
+          SUNDAY CLOSED<br>
+          OFFICE PHONE TIME FROM MORNING 10 A.M.<br>
+          TO EVENING 5 P.M.
+        </div>
+      </div>
+
+      <!-- Summary table right -->
+      <div class="footer-right-summary">
+        <div class="summary-line">
+          <span class="lbl">Goods Value :</span>
+          <span class="val">______________</span>
+        </div>
+        <div class="summary-line">
+          <span class="lbl">Net Amount  :</span>
+          <span class="val">______________</span>
+        </div>
+        <div class="summary-line">
+          <span class="lbl">Advance     :</span>
+          <span class="val">______________</span>
+        </div>
+        <div class="summary-line" style="border-top: 1px dashed var(--border-dark); padding-top: 1.5mm; margin-top: 0.5mm;">
+          <span class="lbl">Net Balance :</span>
+          <span class="val">______________</span>
+        </div>
+
+        <!-- Authorized Signature box inside the summary box context -->
+        <div class="signature-area">
+          <div class="signature-line"></div>
+          <div class="signature-label">Authorized Signature</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Action button for browser preview print -->
+  <div class="action-panel">
+    <button class="btn-print" onclick="window.print()">Print Estimate / Quotation</button>
+  </div>
+
+</body>
+</html>
