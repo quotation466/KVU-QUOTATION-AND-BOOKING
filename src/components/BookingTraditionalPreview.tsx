@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Booking } from '../repositories/BookingRepository';
-import { formatCurrency, numberToWords } from '../utils/numberToWords';
+import { formatCurrency } from '../utils/numberToWords';
 import { getFiscalYear } from '../utils/fiscalYear';
 
 interface BookingTraditionalPreviewProps {
@@ -77,10 +77,9 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
     : paymentsToShow;
 
   // Format customer name
-  const genderPrefix = booking.custGender === 'female' ? 'SMT.' : 'SRI.';
-  let formattedCustName = `${genderPrefix} ${(booking.custName || '').toUpperCase()}`;
+  let formattedCustName = (booking.custName || '').toUpperCase();
   if (booking.fatherName) {
-    const relationStr = `${(booking.relation || 'S/O').toUpperCase()} SRI.`;
+    const relationStr = (booking.relation || 'S/O').toUpperCase();
     formattedCustName += ` ${relationStr} ${(booking.fatherName || '').toUpperCase()}`;
   }
 
@@ -92,7 +91,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
   const isCycloneYes = booking.cyclone === 'Yes';
   const isJhannaYes = booking.jhanna === 'Yes';
 
-  const balanceInWords = numberToWords(balanceAmt);
+  // const balanceInWords = numberToWords(balanceAmt);
 
   const renderReceiptSide = (label: 'CUSTOMER COPY' | 'OFFICE COPY') => {
     return (
@@ -109,115 +108,119 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         </div>
 
         {/* Customer & Info Table */}
-        <table className="bordered-table">
-          <tbody>
-            <tr>
-              <td className="cust-left-col">
-                M/S. {formattedCustName}<br />
-                VILL: {(booking.address || '').toUpperCase()}<br />
-                DIST: {(booking.district || '').toUpperCase()}<br />
-              </td>
-              <td className="cust-right-col">
-                NO.  : {recNo}<br />
-                DATE : {targetDateStr}<br />
-                MOBILE : {booking.mobile || ''}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        {/* Specifications Strip */}
-        <table className="bordered-table spec-table">
-          <tbody>
-            <tr>
-              <td style={{ width: '60%', borderRight: '1px solid black' }}>
-                TRACTOR : {(booking.tractor || '').toUpperCase()}
-              </td>
-              <td style={{ width: '40%', verticalAlign: 'middle' }}>
-                <b style={{ fontSize: '12pt' }}>DELIVERY DATE: {deliveryDateStr}</b>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ width: '60%', borderRight: '1px solid black' }}>
-                PULLY SIZE : {booking.pullySize || ''}
-              </td>
-              <td style={{ width: '40%' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '4mm' }}>
-                  <span>CYCLONE : {isCycloneYes ? 'YES' : 'NO'}</span>
-                  <span>JHANNA : {isJhannaYes ? 'YES' : 'NO'}</span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        {/* Particulars Table */}
-        <table className="particulars-table">
-          <thead>
-            <tr className="table-header-row">
-              <th style={{ textAlign: 'left', paddingLeft: '2mm', width: '55%' }}>PARTICULARS</th>
-              <th style={{ textAlign: 'center', width: '10%' }}>QTY</th>
-              <th style={{ textAlign: 'right', paddingRight: '2mm', width: '17%' }}>RATE</th>
-              <th style={{ textAlign: 'right', paddingRight: '2mm', width: '18%' }}>AMOUNT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {itemsToRender.map((item, idx) => (
-              <tr key={idx} className="item-row">
-                <td style={{ textAlign: 'left', paddingLeft: '2mm' }}>
-                  {item.name ? item.name.toUpperCase() : <>&nbsp;</>}
-                  {item.desc && <div className="item-desc-inline">— {item.desc.toUpperCase()}</div>}
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  {item.name ? item.qty : <>&nbsp;</>}
-                </td>
-                <td style={{ textAlign: 'right', paddingRight: '2mm' }}>
-                  {item.name ? formatCurrency(item.rate) : <>&nbsp;</>}
-                </td>
-                <td style={{ textAlign: 'right', paddingRight: '2mm' }}>
-                  {item.name ? formatCurrency(item.amount) : <>&nbsp;</>}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Advance Payment Breakdown */}
-        {displayPayments.length > 0 && (
-          <table className="bordered-table payments-breakdown-table">
-            <thead>
+        <div className="middle-group-box">
+          <table className="bordered-table">
+            <tbody>
               <tr>
-                <th colSpan={3} style={{ textAlign: 'left', paddingLeft: '2mm', borderBottom: '1px solid black', fontWeight: 'bold', fontSize: '9.5pt' }}>
-                  ADVANCE PAYMENT (CASH / NEFT / UPI)
-                </th>
+                <td className="cust-left-col">
+                  {formattedCustName}<br />
+                  VILL: {(booking.address || '').toUpperCase()}<br />
+                  DIST: {(booking.district || '').toUpperCase()}<br />
+                </td>
+                <td className="cust-right-col">
+                  DATE : {targetDateStr}<br />
+                  MOBILE : {booking.mobile || ''}
+                </td>
               </tr>
-              <tr style={{ fontSize: '9.5pt', fontWeight: 'bold' }}>
-                <th style={{ textAlign: 'left', paddingLeft: '2mm', width: '40%', borderBottom: '1px solid black' }}>DATE RECEIVED</th>
-                <th style={{ textAlign: 'center', width: '30%', borderBottom: '1px solid black' }}>PAYMENT MODE</th>
-                <th style={{ textAlign: 'right', paddingRight: '2mm', width: '30%', borderBottom: '1px solid black' }}>AMOUNT</th>
+            </tbody>
+          </table>
+
+          {/* Specifications Strip */}
+          <table className="bordered-table spec-table">
+            <tbody>
+              <tr>
+                <td style={{ width: '50%', verticalAlign: 'middle' }}>
+                  <b style={{ fontSize: '10pt' }}>TRACTOR : {(booking.tractor || '').toUpperCase()}</b>
+                </td>
+                <td style={{ width: '50%', verticalAlign: 'middle' }}>
+                  <b style={{ fontSize: '10pt' }}>DELIVERY DATE: {deliveryDateStr}</b>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ width: '50%' }}>
+                  PULLY SIZE : {booking.pullySize || ''}
+                </td>
+                <td style={{ width: '50%' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '4mm' }}>
+                    <span>CYCLONE : {isCycloneYes ? 'YES' : 'NO'}</span>
+                    <span>JHANNA : {isJhannaYes ? 'YES' : 'NO'}</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Particulars Table */}
+          <table className="particulars-table">
+            <thead>
+              <tr className="table-header-row">
+                <th style={{ textAlign: 'left', paddingLeft: '2mm', width: '55%' }}>PARTICULARS</th>
+                <th style={{ textAlign: 'center', width: '10%' }}>QTY</th>
+                <th style={{ textAlign: 'right', paddingRight: '2mm', width: '17%' }}>RATE</th>
+                <th style={{ textAlign: 'right', paddingRight: '2mm', width: '18%' }}>AMOUNT</th>
               </tr>
             </thead>
             <tbody>
-              {displayPayments.map((p, idx) => (
-                <tr key={p.id || idx} className="payment-row" style={{ fontSize: '9.5pt', fontWeight: 'bold' }}>
-                  <td style={{ textAlign: 'left', paddingLeft: '2mm' }}>{formatDateString(p.date)}</td>
-                  <td style={{ textAlign: 'center' }}>{p.method.toUpperCase()}</td>
-                  <td style={{ textAlign: 'right', paddingRight: '2mm' }}>₹ {formatCurrency(p.amount)}</td>
+              {itemsToRender.map((item, idx) => (
+                <tr key={idx} className="item-row">
+                  <td style={{ textAlign: 'left', paddingLeft: '2mm' }}>
+                    {item.name ? <span style={{ fontSize: '11.5pt' }}>{item.name.toUpperCase()}</span> : <>&nbsp;</>}
+                    {item.desc && <div className="item-desc-inline">— {item.desc.toUpperCase()}</div>}
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    {item.name ? item.qty : <>&nbsp;</>}
+                  </td>
+                  <td style={{ textAlign: 'right', paddingRight: '2mm' }}>
+                    {item.name ? formatCurrency(item.rate) : <>&nbsp;</>}
+                  </td>
+                  <td style={{ textAlign: 'right', paddingRight: '2mm' }}>
+                    {item.name ? formatCurrency(item.amount) : <>&nbsp;</>}
+                  </td>
                 </tr>
               ))}
+              {/* Spacer row to extend vertical lines downwards */}
+              <tr style={{ height: '100%' }}>
+                <td style={{ borderBottom: '0.25px solid black' }}></td>
+                <td style={{ borderBottom: '0.25px solid black' }}></td>
+                <td style={{ borderBottom: '0.25px solid black' }}></td>
+                <td style={{ borderBottom: '0.25px solid black' }}></td>
+              </tr>
             </tbody>
           </table>
-        )}
+
+          {/* Advance Payment Breakdown */}
+          {displayPayments.length > 0 && (
+            <table className="bordered-table payments-breakdown-table">
+              <thead>
+                <tr>
+                  <th colSpan={3} style={{ textAlign: 'left', paddingLeft: '2mm', borderBottom: '0.25px solid black', fontWeight: 'bold', fontSize: '11.5pt' }}>
+                    ADVANCE PAYMENT (CASH / NEFT / UPI)
+                  </th>
+                </tr>
+                <tr style={{ fontSize: '9.5pt', fontWeight: 'bold' }}>
+                  <th style={{ textAlign: 'left', paddingLeft: '2mm', width: '40%', borderBottom: '0.25px solid black' }}>DATE RECEIVED</th>
+                  <th style={{ textAlign: 'center', width: '30%', borderBottom: '0.25px solid black' }}>PAYMENT MODE</th>
+                  <th style={{ textAlign: 'right', paddingRight: '2mm', width: '30%', borderBottom: '0.25px solid black' }}>AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayPayments.map((p, idx) => (
+                  <tr key={p.id || idx} className="payment-row" style={{ fontSize: '9.5pt', fontWeight: 'bold' }}>
+                    <td style={{ textAlign: 'left', paddingLeft: '2mm' }}>{formatDateString(p.date)}</td>
+                    <td style={{ textAlign: 'center' }}>{p.method.toUpperCase()}</td>
+                    <td style={{ textAlign: 'right', paddingRight: '2mm' }}>₹ {formatCurrency(p.amount)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
 
         {/* Bottom Section */}
         <div className="bottom-section">
           {/* Words & Terms */}
           <div className="footer-left">
-            <div className="amount-words-box">
-              Rs. {balanceInWords}
-            </div>
             <div className="terms-box">
-              E.& O.E.<br />
               SUNDAY CLOSED<br />
               OFFICE PHONE TIME: 10:00 AM TO 5:00 PM
             </div>
@@ -347,7 +350,8 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding: 1mm 0;
+          padding: 2mm;
+          border: 1px solid var(--border-color);
           box-sizing: border-box;
         }
 
@@ -364,7 +368,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
 
         .trad-top-tag-row .copy-label {
-          border: 1px solid var(--border-color);
+          border: 1px dashed var(--border-color);
           padding: 1px 6px;
           font-size: 7.5pt;
         }
@@ -372,6 +376,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         .company-header-block {
           text-align: center;
           margin-bottom: 1.5mm;
+          margin-top: -7px;
         }
 
         .company-header-block .company-title {
@@ -385,35 +390,49 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
           margin-top: 0.3mm;
         }
 
-        /* Tables */
         .receipt-side-wrap .bordered-table {
           width: 100%;
           border-collapse: collapse;
-          border: 1px solid var(--border-color);
-          margin-bottom: 1.5mm;
+          border: 0.25px solid black;
+        }
+
+        /* Middle Group Box */
+        .receipt-side-wrap .middle-group-box {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 120px;
+        }
+      
+        .receipt-side-wrap .middle-group-box > table {
+          margin-bottom: 0;
+        }
+        
+        .receipt-side-wrap .middle-group-box > table + table {
+          border-top: none;
         }
 
         .receipt-side-wrap .bordered-table td {
           padding: 1.2mm 2mm;
-          border: 1px solid var(--border-color);
+          border: 1px dashed var(--border-color);
           font-size: 8pt;
           line-height: 1.35;
           vertical-align: top;
         }
 
         .receipt-side-wrap .cust-left-col {
-          width: 48%;
+          width: 50%;
           font-weight: bold;
-          font-size: 20pt;
+          font-size: 36pt;
           padding: 3mm 3mm;
           line-height: 1.5;
         }
 
         .receipt-side-wrap .cust-right-col {
-          width: 52%;
+          width: 50%;
           white-space: nowrap;
           font-weight: bold;
-          font-size: 14pt;
+          font-size: 36pt;
           padding: 3mm 3mm;
           line-height: 1.5;
         }
@@ -422,23 +441,25 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
           font-size: 9.5pt;
           font-weight: bold;
           white-space: nowrap;
+          border: none;
         }
 
         /* Particulars Table */
         .receipt-side-wrap .particulars-table {
           width: 100%;
           border-collapse: collapse;
-          border: 1px solid var(--border-color);
-          margin-bottom: auto;
+          border: 0.25px solid black;
+          border-bottom: none;
+          flex: 1;
         }
 
         .receipt-side-wrap .particulars-table th {
           font-size: 9.5pt;
           font-weight: bold;
-          border: 1px solid var(--border-color);
           border-left: 1px dashed var(--border-color);
           border-right: 1px dashed var(--border-color);
-          border-bottom: 1.2px solid var(--border-color);
+          border-top: none;
+          border-bottom: 0.25px solid black;
           padding: 1.2mm 1mm;
         }
 
@@ -460,7 +481,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
         
         .receipt-side-wrap .particulars-table tr:last-child td {
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: none;
         }
 
         .receipt-side-wrap .item-desc-inline {
@@ -485,7 +506,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
 
         .receipt-side-wrap .amount-words-box {
-          border: 1px solid var(--border-color);
+          border: 1px dashed var(--border-color);
           padding: 1.5mm 2mm;
           font-size: 9.5pt;
           font-weight: bold;
@@ -495,19 +516,22 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
 
         .receipt-side-wrap .terms-box {
-          font-size: 9.5pt;
+          font-size: 14pt;
           line-height: 1.4;
           color: #000;
           font-weight: bold;
         }
 
         .receipt-side-wrap .footer-right-col {
-          width: 43%;
+          width: 60%;
+          height: 150%;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          border: 1px solid var(--border-color);
+          border: 0.25px solid black;
           padding: 1.5mm 2mm;
+          position: relative;
+          top: -60px;
         }
 
         .receipt-side-wrap .summary-table {
@@ -530,7 +554,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
 
         .receipt-side-wrap .summary-table .balance-row td {
-          border-top: 1px solid var(--border-color);
+          border-top: 0.25px solid black;
           font-weight: bold;
           padding-top: 0.8mm;
         }
@@ -544,7 +568,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
 
         .receipt-side-wrap .signature-line {
           width: 30mm;
-          border-top: 1px solid var(--border-color);
+          border-top: 1px dashed var(--border-color);
           margin-bottom: 0.5mm;
         }
 

@@ -6,6 +6,7 @@ import { Modal } from '../components/Modal';
 import { BookingThermalPreview } from '../components/BookingThermalPreview';
 import { BookingTraditionalPreview } from '../components/BookingTraditionalPreview';
 import { PDFService } from '../services/PDFService';
+import { LedgerPrintPreview } from '../components/LedgerPrintPreview';
 import { Button } from '../components/Button';
 import { DataTable } from '../components/DataTable';
 import { LoadingIndicator } from '../components/LoadingIndicator';
@@ -29,6 +30,7 @@ interface BookingCustomer {
 
 export const BookingCustomersPage: React.FC = () => {
   const printAreaRef = useRef<HTMLDivElement>(null);
+  const ledgerPrintAreaRef = useRef<HTMLDivElement>(null);
 
   // States
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -184,6 +186,22 @@ export const BookingCustomersPage: React.FC = () => {
 
     const waUrl = `https://wa.me/91${printBooking.mobile}?text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
+  };
+
+  const handlePrintLedger = async () => {
+    if (!selectedCustomer || !ledgerPrintAreaRef.current) return;
+    const content = ledgerPrintAreaRef.current.querySelector('#ledgerPrintArea') as HTMLElement;
+    if (content) {
+      await PrintService.printElement(content, false);
+    }
+  };
+
+  const handleDownloadLedgerPdf = async () => {
+    if (!selectedCustomer || !ledgerPrintAreaRef.current) return;
+    const content = ledgerPrintAreaRef.current.querySelector('#ledgerPrintArea') as HTMLElement;
+    if (!content) return;
+    const fileName = `KVU_Ledger_${selectedCustomer.custName.replace(/\s+/g, '_')}.pdf`;
+    await PDFService.downloadPdf(content, fileName, false);
   };
 
   const formatDate = (dateStr: string) => {
@@ -532,7 +550,9 @@ export const BookingCustomersPage: React.FC = () => {
             )}
           </div>
 
-          <div className="modal-actions-container">
+          <div className="modal-actions-container" style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', width: '100%' }}>
+            <Button onClick={handlePrintLedger} variant="primary" style={{ margin: 0 }}>🖨 Print Ledger</Button>
+            <Button onClick={handleDownloadLedgerPdf} variant="success" style={{ margin: 0 }}>📥 Download PDF</Button>
             <Button onClick={() => setShowLedgerModal(false)} variant="secondary" style={{ margin: 0 }}>Close Ledger</Button>
           </div>
         </Modal>
@@ -580,6 +600,12 @@ export const BookingCustomersPage: React.FC = () => {
           </div>
         </Modal>
       )}
+      {/* Hidden Ledger Print Area (rendered off-screen for printing/PDF capture) */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', height: 0, overflow: 'hidden' }}>
+        <div ref={ledgerPrintAreaRef}>
+          {selectedCustomer && <LedgerPrintPreview customer={selectedCustomer} />}
+        </div>
+      </div>
     </div>
   );
 };
