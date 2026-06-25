@@ -97,8 +97,95 @@ export const LedgerPrintPreview: React.FC<LedgerPrintPreviewProps> = ({ customer
           font-size: 11pt;
         }
 
+        /* Header Styles */
         .ledger-print-wrapper .header-box {
+          border: 2px solid black;
           margin-bottom: 5mm;
+        }
+
+        .ledger-print-wrapper .header-top {
+          display: flex;
+          align-items: center;
+          padding: 5px 8px;
+          border-bottom: 1px solid black;
+        }
+
+        .ledger-print-wrapper .logo {
+          margin-left: 18px;
+          margin-right: 8px;
+          flex-shrink: 0;
+          text-align: center;
+        }
+
+        .ledger-print-wrapper .estd-left {
+          font-size: 11px;
+          color: #555;
+          font-weight: bold;
+          letter-spacing: 1px;
+          margin-bottom: 4px;
+          text-align: center;
+        }
+
+        .ledger-print-wrapper .logo img {
+          width: 110px;
+          height: auto;
+          display: block;
+        }
+
+        .ledger-print-wrapper .company-center {
+          flex-grow: 1;
+          text-align: center;
+        }
+
+        .ledger-print-wrapper .company-center h1 {
+          font-size: 20pt;
+          font-weight: 800;
+          margin: 0;
+          color: #000;
+          letter-spacing: 0.5px;
+        }
+
+        .ledger-print-wrapper .company-center h1 .reg-sym {
+          font-size: 10pt;
+          vertical-align: super;
+        }
+
+        .ledger-print-wrapper .company-center .estd {
+          font-size: 10pt;
+          font-weight: bold;
+          letter-spacing: 2px;
+          color: #444;
+        }
+
+        .ledger-print-wrapper .company-center .iso {
+          font-size: 8pt;
+          font-weight: bold;
+          margin-top: 1mm;
+        }
+
+        .ledger-print-wrapper .company-center .tagline {
+          font-size: 9pt;
+          font-weight: bold;
+          margin-top: 1mm;
+          color: #333;
+        }
+
+        .ledger-print-wrapper .company-center .sub {
+          font-size: 8.5pt;
+          font-weight: bold;
+          margin-top: 0.8mm;
+        }
+
+        .ledger-print-wrapper .header-bottom {
+          display: flex;
+          justify-content: space-between;
+          padding: 2mm 3mm;
+          font-size: 9pt;
+          font-weight: bold;
+        }
+
+        .ledger-print-wrapper .header-bottom .gstn {
+          text-align: right;
         }
 
         .ledger-print-title {

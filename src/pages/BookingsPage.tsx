@@ -1289,14 +1289,6 @@ export const BookingsPage: React.FC = () => {
                     onChange={(e) => setPayRemarks(e.target.value)}
                   />
                 </div>
-                <div>
-                  <label style={{ fontWeight: '600', display: 'block', marginBottom: '6px' }}>Recorded By *</label>
-                  <input 
-                    type="text" 
-                    value={recordedBy}
-                    onChange={(e) => setRecordedBy(e.target.value)}
-                  />
-                </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

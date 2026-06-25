@@ -553,10 +553,6 @@ export const PaymentPage: React.FC = () => {
                 <label>Remarks</label>
                 <input type="text" placeholder="Remarks (optional)" value={payRemarks} onChange={e => setPayRemarks(e.target.value)} />
               </div>
-              <div className="modal-form-field">
-                <label>Recorded By *</label>
-                <input type="text" value={payRecordedBy} onChange={e => setPayRecordedBy(e.target.value)} />
-              </div>
             </div>
 
             <div className="modal-actions-container">
