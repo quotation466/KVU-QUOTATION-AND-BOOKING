@@ -65,14 +65,14 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
     const day = String(dateVal.getDate()).padStart(2, '0');
     const month = String(dateVal.getMonth() + 1).padStart(2, '0');
     const year = dateVal.getFullYear();
-    const weekdays = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const weekdayName = weekdays[dateVal.getDay()];
     return `${day}-${month}-${year} (${weekdayName})`;
   };
   const deliveryDateStr = getDeliveryDateWithDay(booking.deliveryDate);
 
   const paymentsToShow = booking.payments || [];
-  const displayPayments = paymentIndex !== undefined && paymentIndex >= 0 
+  const displayPayments = paymentIndex !== undefined && paymentIndex >= 0
     ? paymentsToShow.slice(0, paymentIndex + 1)
     : paymentsToShow;
 
@@ -85,7 +85,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
   }
 
   const itemsToRender = [...booking.items];
-  while (itemsToRender.length < 4) {
+  while (itemsToRender.length < 1) {
     itemsToRender.push({ name: '', desc: '', qty: 0, rate: 0, amount: 0 });
   }
 
@@ -116,12 +116,10 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
                 M/S. {formattedCustName}<br />
                 VILL: {(booking.address || '').toUpperCase()}<br />
                 DIST: {(booking.district || '').toUpperCase()}<br />
-                STATE: {(booking.state || 'UP').toUpperCase()}<br />
               </td>
               <td className="cust-right-col">
                 NO.  : {recNo}<br />
                 DATE : {targetDateStr}<br />
-                <b>DELIVERY DATE: {deliveryDateStr}</b><br />
                 MOBILE : {booking.mobile || ''}
               </td>
             </tr>
@@ -135,19 +133,19 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
               <td style={{ width: '60%', borderRight: '1px solid black' }}>
                 TRACTOR : {(booking.tractor || '').toUpperCase()}
               </td>
-              <td style={{ width: '40%' }}>
-                HP : {booking.hp || ''} &nbsp;&nbsp; PTO SHAFT: {booking.ptoShaft || ''}
+              <td style={{ width: '40%', verticalAlign: 'middle' }}>
+                <b style={{ fontSize: '12pt' }}>DELIVERY DATE: {deliveryDateStr}</b>
               </td>
             </tr>
             <tr>
               <td style={{ width: '60%', borderRight: '1px solid black' }}>
+                PULLY SIZE : {booking.pullySize || ''}
+              </td>
+              <td style={{ width: '40%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '4mm' }}>
                   <span>CYCLONE : {isCycloneYes ? 'YES' : 'NO'}</span>
                   <span>JHANNA : {isJhannaYes ? 'YES' : 'NO'}</span>
                 </div>
-              </td>
-              <td style={{ width: '40%' }}>
-                PULLY SIZE : {booking.pullySize || ''}
               </td>
             </tr>
           </tbody>
@@ -190,7 +188,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
             <thead>
               <tr>
                 <th colSpan={3} style={{ textAlign: 'left', paddingLeft: '2mm', borderBottom: '1px solid black', fontWeight: 'bold', fontSize: '9.5pt' }}>
-                  ADVANCE PAYMENT BREAKDOWN (CASH / NEFT / UPI)
+                  ADVANCE PAYMENT (CASH / NEFT / UPI)
                 </th>
               </tr>
               <tr style={{ fontSize: '9.5pt', fontWeight: 'bold' }}>
@@ -247,7 +245,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
                 </tr>
               </tbody>
             </table>
-            
+
             <div className="signature-area">
               <div className="signature-line"></div>
               <div className="signature-label">Auth. Sign</div>
@@ -260,7 +258,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
   };
 
   return (
-    <div 
+    <div
       className="traditional-receipt-container"
       id="bookingTraditionalPrintArea"
       style={{
@@ -272,7 +270,8 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         overflowX: 'auto',
       }}
     >
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .traditional-receipt-container {
           --font-family: 'Courier New', Courier, monospace;
           --border-color: #000000;
@@ -405,14 +404,18 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         .receipt-side-wrap .cust-left-col {
           width: 48%;
           font-weight: bold;
-          font-size: 9pt;
+          font-size: 20pt;
+          padding: 3mm 3mm;
+          line-height: 1.5;
         }
 
         .receipt-side-wrap .cust-right-col {
           width: 52%;
           white-space: nowrap;
           font-weight: bold;
-          font-size: 9pt;
+          font-size: 14pt;
+          padding: 3mm 3mm;
+          line-height: 1.5;
         }
 
         .receipt-side-wrap .spec-table td {
@@ -426,22 +429,23 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
           width: 100%;
           border-collapse: collapse;
           border: 1px solid var(--border-color);
-          flex: 1;
-          margin-bottom: 1.5mm;
+          margin-bottom: auto;
         }
 
         .receipt-side-wrap .particulars-table th {
           font-size: 9.5pt;
           font-weight: bold;
           border: 1px solid var(--border-color);
+          border-left: 1px dashed var(--border-color);
+          border-right: 1px dashed var(--border-color);
           border-bottom: 1.2px solid var(--border-color);
           padding: 1.2mm 1mm;
         }
 
         .receipt-side-wrap .particulars-table td {
           padding: 1mm 1.5mm;
-          border-left: 1px solid var(--border-color);
-          border-right: 1px solid var(--border-color);
+          border-left: 1px dashed var(--border-color);
+          border-right: 1px dashed var(--border-color);
           font-size: 9.5pt;
           line-height: 1.25;
           font-weight: bold;
@@ -452,7 +456,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
         }
 
         .receipt-side-wrap .particulars-table tr.item-row td {
-          border-bottom: 1px dashed #d0d0d0;
+          border-bottom: none;
         }
         
         .receipt-side-wrap .particulars-table tr:last-child td {
@@ -583,7 +587,7 @@ export const BookingTraditionalPreview: React.FC<BookingTraditionalPreviewProps>
       {/* A4 Landscape Page */}
       <div className="a4-page-scale-wrap" style={{ width: '297mm', overflow: 'hidden' }}>
         <div className="a4-landscape-receipt" id="bookingTraditionalPdfCapture">
-          
+
           {/* Vertical cutting line with scissors */}
           <div className="cut-line-separator">
             <div className="scissors top">
