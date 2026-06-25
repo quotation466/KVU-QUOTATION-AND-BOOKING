@@ -14,6 +14,41 @@ import { PrintService } from '../utils/PrintService';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/BookingsPage.css';
 
+const MINI_MILL_PRESETS = [
+  'MINI RICE MILL TKCJ-8',
+  'MINI RICE MILL TKCJ-6',
+  'MINI RICE MILL TKC-8',
+  'MINI RICE MILL TKC-6',
+  'MINI RICE MILL NC-6',
+  'MINI RICE MILL NC-8',
+  'MINI RICE MILL NCJ-6',
+  'MINI RICE MILL NCJ-8'
+];
+
+const FEED_PLANT_PRESETS = [
+  'FEED MIXER-250',
+  'FEED MIXER-500',
+  'FEED MIXER-1000',
+  'FEED GRINDER S-SCREEN',
+  'FEED GRINDER D-SCREEN',
+  'SCREW CONVEYOR 8x8',
+  'SCREW CONVEYOR 8x11',
+  'SCREW CONVEYOR 10x10',
+  'SCREW CONVEYOR 10x12',
+  'BUCKET ELEVATOR 23 ft',
+  'BUCKET ELEVATOR 16 ft',
+  'BATCH BIN-500',
+  'BATCH BIN-1000',
+  'MOTOR COST'
+];
+
+const ATTA_CHAKKI_PRESETS = [
+  'ATTA CHAKKI',
+  'OIL EXPELLER',
+  'MOBILE ATTA CHAKKI',
+  'FLOUR MIXER'
+];
+
 export const BookingsPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -145,6 +180,7 @@ export const BookingsPage: React.FC = () => {
   const [savedBookingData, setSavedBookingData] = useState<Booking | null>(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [printType, setPrintType] = useState<'Thermal' | 'A4_Traditional'>('A4_Traditional');
+  const [savingPhase, setSavingPhase] = useState<'idle' | 'loading' | 'success'>('idle');
 
   // Load Fiscal Year
   const fiscalYear = getFiscalYear();
@@ -168,6 +204,7 @@ export const BookingsPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     const stateData = location.state as {
       selectedCustomer?: Customer;
+      selectedQuotation?: any;
       editBooking?: { booking: Booking; index: number };
     } | null;
 
@@ -185,6 +222,26 @@ export const BookingsPage: React.FC = () => {
       setAadhar(c.aadhar || '');
       
       // Clear location state
+      window.history.replaceState({}, document.title);
+    } else if (stateData?.selectedQuotation) {
+      const q = stateData.selectedQuotation;
+      suppressDistrictReset.current = true;
+      setCustName(q.custName);
+      setCustGender(q.gender as 'male' | 'female' || 'male');
+      setRelation(q.relation || 'S/O');
+      setFatherName(q.fatherName || '');
+      setAddress(q.address || '');
+      setPost(q.post || '');
+      setState(q.state || 'Uttar Pradesh');
+      setDistrict(q.district || '');
+      setPincode(q.pincode || '');
+      setMobile(q.mobile || '');
+      setAadhar(q.aadhar || '');
+      setDiscount(String(q.discount || 0));
+      setItems(q.items || []);
+      
+      // Re-enable district auto-reset after a tick
+      setTimeout(() => { suppressDistrictReset.current = false; }, 500);
       window.history.replaceState({}, document.title);
     } else if (stateData?.editBooking) {
       const { booking, index } = stateData.editBooking;
@@ -329,30 +386,7 @@ export const BookingsPage: React.FC = () => {
     }
   }, []);
 
-  // Product presets for LineItemsEditor autocomplete
-  const BOOKING_PRESETS = [
-    { name: 'MINI RICE MILL TKCJ-8' },
-    { name: 'MINI RICE MILL TKCJ-6' },
-    { name: 'MINI RICE MILL TKC-8'  },
-    { name: 'MINI RICE MILL TKC-6'  },
-    { name: 'MINI RICE MILL NC-6'   },
-    { name: 'MINI RICE MILL NC-8'   },
-    { name: 'MINI RICE MILL NCJ-6'  },
-    { name: 'MINI RICE MILL NCJ-8'  },
-    { name: 'FEED MIXER-250'        },
-    { name: 'FEED MIXER-500'        },
-    { name: 'FEED MIXER-1000'       },
-    { name: 'FEED GRINDER S-SCREEN' },
-    { name: 'FEED GRINDER D-SCREEN' },
-    { name: 'SCREW CONVEYOR 8x8'    },
-    { name: 'SCREW CONVEYOR 8x11'   },
-    { name: 'BUCKET ELEVATOR 23 ft' },
-    { name: 'BUCKET ELEVATOR 16 ft' },
-    { name: 'BATCH BIN-500'         },
-    { name: 'BATCH BIN-1000'        },
-    { name: 'ATTA CHAKKI'           },
-    { name: 'OIL EXPELLER'          },
-  ];
+
 
   // Item list is fully controlled by LineItemsEditor
   const handleSelectCustomer = (c: Customer) => {
@@ -614,16 +648,22 @@ export const BookingsPage: React.FC = () => {
     };
 
     // Save booking — capture returned nextSeq to update sequence display
+    setSavingPhase('loading');
     const { nextSeq } = await BookingRepository.saveBooking(newBooking, editingIndex !== null ? editingIndex : undefined);
 
-    // Show message
-    if (editingIndex !== null) {
-      alert('Booking record updated! ✅');
-    } else {
-      alert('New Booking record saved! ✅');
-      // Update sequence immediately so next booking gets correct number
+    // Wait 2s for the loader animation to play
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Show success phase
+    setSavingPhase('success');
+    const isEdit = editingIndex !== null;
+    if (!isEdit) {
       setSequence(String(nextSeq + 1).padStart(4, '0'));
     }
+
+    // Wait 1.5s for the success message, then open receipt
+    await new Promise(r => setTimeout(r, 1500));
+    setSavingPhase('idle');
 
     // Set preview modal to show the receipt
     setSavedBookingData(newBooking);
@@ -914,8 +954,12 @@ export const BookingsPage: React.FC = () => {
             <LineItemsEditor
               items={items}
               onChange={setItems}
-              presetMode="autocomplete"
-              presets={BOOKING_PRESETS}
+              presetMode="chips"
+              chipGroups={[
+                { label: 'Quick Select — Rice Mill Models',      chipClass: '',      names: MINI_MILL_PRESETS   },
+                { label: 'Quick Select — Feed Plant Components', chipClass: 'feed',  names: FEED_PLANT_PRESETS },
+                { label: 'Quick Select — Atta Chakki Models',    chipClass: 'atta',  names: ATTA_CHAKKI_PRESETS },
+              ]}
               descLayout="none"
               nameInputId="bpNameInput"
               qtyInputId="bpQtyInput"
@@ -1504,6 +1548,76 @@ export const BookingsPage: React.FC = () => {
             <Button onClick={handleCloseModal} variant="secondary">Close</Button>
           </div>
         </Modal>
+      )}
+
+      {/* Saving Overlay — ld1 Loader + Success Message */}
+      {savingPhase !== 'idle' && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.6)', zIndex: 99999,
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'center', alignItems: 'center',
+          backdropFilter: 'blur(4px)',
+        }}>
+          {savingPhase === 'loading' && (
+            <>
+              <div style={{ position: 'relative', transform: 'rotate(45deg)', width: 60, height: 60 }}>
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div1 1s ease-in-out infinite'
+                }} />
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div2 1s ease-in-out infinite'
+                }} />
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div3 1s ease-in-out infinite'
+                }} />
+              </div>
+              <p style={{
+                color: '#fff', marginTop: 30, fontSize: 18, fontWeight: 600,
+                letterSpacing: '0.5px', textAlign: 'center'
+              }}>Saving Booking...</p>
+            </>
+          )}
+          {savingPhase === 'success' && (
+            <div style={{
+              background: '#fff', borderRadius: 16, padding: '40px 50px',
+              textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+              animation: 'successPop 0.4s ease-out'
+            }}>
+              <div style={{ fontSize: 64, marginBottom: 12 }}>✅</div>
+              <h2 style={{ color: '#16a34a', fontSize: 22, marginBottom: 8 }}>Booking Successful!</h2>
+              <p style={{ color: '#555', fontSize: 14 }}>Your booking has been saved successfully.</p>
+            </div>
+          )}
+
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes ld1_div1 {
+              0%   { top: calc(50% + 52.5px); background: #FE4A49; }
+              50%  { top: calc(50% - 52.5px); background: #59CD90; }
+              100% { top: calc(50% + 52.5px); background: #009FB7; }
+            }
+            @keyframes ld1_div2 {
+              0%   { right: calc(50% - 52.5px); background: #FE4A49; }
+              50%  { right: calc(50% + 52.5px); background: #FED766; }
+              100% { right: calc(50% - 52.5px); background: #59CD90; }
+            }
+            @keyframes ld1_div3 {
+              0%   { left: calc(50% - 52.5px); background: #FE4A49; }
+              50%  { left: calc(50% + 52.5px); background: #D91E36; }
+              100% { left: calc(50% - 52.5px); background: #FE4A49; }
+            }
+            @keyframes successPop {
+              0%   { transform: scale(0.5); opacity: 0; }
+              100% { transform: scale(1);   opacity: 1; }
+            }
+          ` }} />
+        </div>
       )}
     </div>
   );

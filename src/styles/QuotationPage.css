@@ -365,28 +365,34 @@
   border-radius: var(--radius-pill) !important;
   font-size: var(--fs-xs) !important;
   font-weight: 600 !important;
-  color: var(--text-secondary) !important;
+  color: #000000 !important;
   cursor: pointer;
   transition: all var(--transition-fast) !important;
   margin: 0 !important;
   min-height: auto !important;
 }
 
-.qp-preset-chip:hover {
+.qp-preset-chip:hover,
+.qp-preset-chip:focus,
+.qp-preset-chip:active {
   background: var(--primary-bg) !important;
-  color: var(--primary) !important;
+  color: #000000 !important;
   border-color: var(--primary) !important;
 }
 
-.qp-preset-chip.feed:hover {
+.qp-preset-chip.feed:hover,
+.qp-preset-chip.feed:focus,
+.qp-preset-chip.feed:active {
   background: var(--primary-bg) !important;
-  color: #2563EB !important;
+  color: #000000 !important;
   border-color: #2563EB !important;
 }
 
-.qp-preset-chip.atta:hover {
+.qp-preset-chip.atta:hover,
+.qp-preset-chip.atta:focus,
+.qp-preset-chip.atta:active {
   background: #FFFBEB !important;
-  color: #D97706 !important;
+  color: #000000 !important;
   border-color: #D97706 !important;
 }
 

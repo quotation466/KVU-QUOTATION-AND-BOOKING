@@ -2531,7 +2531,7 @@
     border-radius: var(--radius-pill);
     border: 1.5px solid var(--border-medium);
     background: var(--surface-0);
-    color: var(--text-secondary);
+    color: #000000 !important;
     cursor: pointer;
     transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
     min-height: 34px;
@@ -2539,27 +2539,33 @@
     white-space: nowrap;
   }
 
-  .qp-preset-chip:hover {
+  .qp-preset-chip:hover,
+  .qp-preset-chip:focus,
+  .qp-preset-chip:active {
     border-color: var(--kvu-red);
     background: var(--kvu-red-bg);
-    color: var(--kvu-red);
+    color: #000000 !important;
   }
 
   /* Feed preset chip color */
   .qp-preset-chip.feed {
     border-color: var(--border-medium);
   }
-  .qp-preset-chip.feed:hover {
+  .qp-preset-chip.feed:hover,
+  .qp-preset-chip.feed:focus,
+  .qp-preset-chip.feed:active {
     border-color: var(--color-success);
     background: var(--color-success-bg);
-    color: var(--color-success);
+    color: #000000 !important;
   }
 
   /* Atta preset chip */
-  .qp-preset-chip.atta:hover {
+  .qp-preset-chip.atta:hover,
+  .qp-preset-chip.atta:focus,
+  .qp-preset-chip.atta:active {
     border-color: #d97706;
     background: #fffbeb;
-    color: #d97706;
+    color: #000000 !important;
   }
 
   /* ── Add Line Item Row ── */

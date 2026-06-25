@@ -334,3 +334,420 @@
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
+
+/* ================= BUSINESS INTELLIGENCE (BI) STYLING ================= */
+.bi-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.bi-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+
+.bg-primary-sub { border-left: 4px solid var(--primary); background: var(--primary-light) !important; }
+.bg-warning-sub { border-left: 4px solid var(--warning); background: var(--warning-light) !important; }
+.bg-success-sub { border-left: 4px solid var(--success); background: var(--success-light) !important; }
+.bg-danger-sub { border-left: 4px solid var(--danger); background: var(--danger-light) !important; }
+
+.bi-kpi-header {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.bi-kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.bi-value-unit {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.bi-kpi-details {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.bi-kpi-progress-container {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.bi-kpi-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--danger), var(--primary));
+  border-radius: 3px;
+  transition: width 1s ease-in-out;
+}
+
+/* 2-Column BI Grids */
+.bi-two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 768px) {
+  .bi-two-col-grid {
+    grid-template-columns: 1fr;
+  }
+  .bi-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.bi-card-header {
+  margin-bottom: 18px;
+}
+
+.bi-card-header h3 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  font-family: var(--font-display);
+}
+
+.bi-card-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* Funnel Visualization */
+.bi-funnel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.bi-funnel-stage {
+  padding: 10px 16px;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-xs);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  min-height: 40px;
+}
+
+.bi-funnel-stage:hover {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+
+.bi-funnel-label {
+  font-weight: 700;
+}
+
+.bi-funnel-metrics {
+  font-size: 11px;
+}
+
+/* Alerts Dashboard Container */
+.bi-alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bi-alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: var(--fs-xs);
+}
+
+.bi-alert-item.danger {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+.bi-alert-item.warning {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+.bi-alert-item.info {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+.bi-alert-item.success {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.bi-alert-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.bi-alert-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bi-alert-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.bi-alert-action-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.bi-alert-action-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.bi-alert-list {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.bi-empty-state {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+
+/* BI Tables & Badges */
+.bi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-xs);
+}
+
+.bi-table th, .bi-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.bi-table th {
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--surface-1);
+}
+
+.bi-table tr:hover td {
+  background: var(--surface-2);
+}
+
+.bi-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.bi-badge.green { background: #d1fae5; color: #065f46; }
+.bi-badge.orange { background: #ffedd5; color: #9a3412; }
+.bi-badge.gray { background: #f3f4f6; color: #374151; }
+
+.color-success { color: var(--success) !important; }
+.color-warning { color: var(--warning) !important; }
+.color-danger { color: var(--danger) !important; }
+.color-muted { color: var(--text-muted) !important; }
+
+/* Aging Grid */
+.bi-aging-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.bi-aging-block {
+  padding: 12px 8px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bi-aging-block.green { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #065f46; }
+.bi-aging-block.warning { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: #9a3412; }
+.bi-aging-block.danger { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #991b1b; }
+.bi-aging-block.dark { background: rgba(75, 85, 99, 0.1); border: 1px solid rgba(75, 85, 99, 0.2); color: #1f2937; }
+
+.bi-aging-val {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.bi-aging-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Monthly Trend Grid */
+.bi-monthly-trend-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .bi-monthly-trend-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.bi-trend-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  background: var(--surface-1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.bi-trend-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  background: var(--bg-card);
+}
+
+.bi-trend-month {
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+.bi-trend-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.bi-trend-stat-row strong {
+  color: var(--text-secondary);
+}
+
+.bi-trend-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border);
+}
+
+.bi-trend-footer .rate {
+  color: var(--primary);
+}
+
+/* BI Modals List View */
+.bi-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bi-modal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: var(--fs-xs);
+}
+
+.bi-modal-row:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.bi-subtext {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.bi-value-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bi-action-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--primary);
+}

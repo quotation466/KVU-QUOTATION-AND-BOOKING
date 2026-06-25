@@ -10,6 +10,7 @@ import { getStatesList, getDistrictsForState } from '../utils/indiaDistricts';
 import { formatCurrency } from '../utils/numberToWords';
 import { PrintService } from '../utils/PrintService';
 import { getFiscalYear } from '../utils/fiscalYear';
+import { Modal } from '../components/Modal';
 import '../styles/QuotationPage.css';
 
 // HSN and GST mappings from legacy
@@ -109,6 +110,8 @@ export const QuotationPage: React.FC = () => {
   const [seqInput, setSeqInput] = useState('');
   const [generatedQuote, setGeneratedQuote] = useState<Quotation | null>(null);
   const templateVariant = 'classic';
+  const [savingPhase, setSavingPhase] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   // Autofill chosen customer
   const applyCustomerData = (c: Customer) => {
@@ -401,6 +404,9 @@ export const QuotationPage: React.FC = () => {
       savedAt: new Date().toISOString()
     };
 
+    // Show loading animation
+    setSavingPhase('loading');
+
     // Save quotation in Supabase directly
     const { nextRefNum } = await QuotationRepository.saveQuotation(quoteRecord, editingIndex !== undefined);
 
@@ -429,29 +435,33 @@ export const QuotationPage: React.FC = () => {
       setDbCustomers(updatedCusts);
     }
 
+    // Wait 2s for loader animation
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Show success phase
+    setSavingPhase('success');
+
     // Update screen state
     setGeneratedQuote(quoteRecord);
     localStorage.removeItem('kvu_quotation_draft');
 
     if (editingIndex === undefined) {
-      // Set sequence for next new quote
       setSeqInput(String(nextRefNum + 1).padStart(4, '0'));
-      alert(`✅ Quotation Generated: ${finalRef}`);
-    } else {
-      alert(`✅ Quotation Updated: ${finalRef}`);
     }
 
-    // Scroll to print view smoothly
-    setTimeout(() => {
-      const previewEl = document.getElementById('preview-section');
-      if (previewEl) previewEl.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    // Wait 1.5s for success message
+    await new Promise(r => setTimeout(r, 1500));
+    setSavingPhase('idle');
+
+    // Show preview modal
+    setShowPreviewModal(true);
   };
 
   // Reset form / Cancel editing
   const handleCancelEdit = () => {
     setEditingIndex(undefined);
     setGeneratedQuote(null);
+    setShowPreviewModal(false);
     setLineItems([]);
     setDiscount('');
     setIncInst(false);
@@ -509,6 +519,7 @@ export const QuotationPage: React.FC = () => {
   };
 
   return (
+    <>
     <div className="qp-page">
 
       {/* ── Edit Mode Banner ── */}
@@ -846,6 +857,15 @@ export const QuotationPage: React.FC = () => {
             </svg>
             {editingIndex !== undefined ? 'Update & Generate Preview' : 'Save & Generate Quotation'}
           </button>
+          {generatedQuote && (
+            <button type="button" className="qp-cta-secondary" onClick={() => setShowPreviewModal(true)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              View Print Preview
+            </button>
+          )}
           {editingIndex !== undefined && (
             <button type="button" className="qp-cta-secondary" onClick={handleCancelEdit}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -857,47 +877,117 @@ export const QuotationPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Preview Block ── */}
-      {generatedQuote && (
-        <div id="preview-section" className="qp-preview-section">
-          <div className="qp-preview-header">
-            <div className="qp-preview-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              Quotation Print Preview
-              <span className="kvu-badge" style={{ background: 'var(--text-muted)', fontSize: '10px' }}>{generatedQuote.ref}</span>
-            </div>
-            <div className="qp-preview-actions">
-              <button type="button" className="qp-preview-btn print" onClick={handlePrint}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-                  <rect x="6" y="14" width="12" height="8"/>
-                </svg>
-                Print
-              </button>
-              <button type="button" className="qp-preview-btn pdf" onClick={handleDownloadPdf}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Download PDF
-              </button>
-              <button type="button" className="qp-preview-btn whatsapp" onClick={handleWhatsAppShare}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-                Share WhatsApp
-              </button>
-            </div>
-          </div>
-          <div className="qp-preview-canvas">
+      {/* ── Preview Modal ── */}
+      {showPreviewModal && generatedQuote && (
+        <Modal
+          isOpen={showPreviewModal}
+          onClose={() => setShowPreviewModal(false)}
+          title={`🖨 Quotation Print Preview - ${generatedQuote.ref}`}
+          size="lg"
+        >
+          <div className="qp-preview-canvas" style={{ maxHeight: '70vh', overflow: 'auto', borderRadius: 'var(--radius-md)', padding: '16px' }}>
             <QuotationPreview quote={generatedQuote} variant={templateVariant} innerRef={printAreaRef} />
           </div>
-        </div>
+
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px', flexWrap: 'wrap' }}>
+            <button type="button" className="qp-preview-btn print" onClick={handlePrint}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
+              </svg>
+              Print
+            </button>
+            <button type="button" className="qp-preview-btn pdf" onClick={handleDownloadPdf}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PDF
+            </button>
+            <button type="button" className="qp-preview-btn whatsapp" onClick={handleWhatsAppShare}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Share WhatsApp
+            </button>
+            <button type="button" className="qp-preview-btn print" onClick={() => setShowPreviewModal(false)}>
+              Close
+            </button>
+          </div>
+        </Modal>
       )}
     </div>
+
+      {/* Saving Overlay — ld1 Loader + Success Message */}
+      {savingPhase !== 'idle' && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.6)', zIndex: 99999,
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'center', alignItems: 'center',
+          backdropFilter: 'blur(4px)',
+        }}>
+          {savingPhase === 'loading' && (
+            <>
+              <div style={{ position: 'relative', transform: 'rotate(45deg)', width: 60, height: 60 }}>
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div1 1s ease-in-out infinite'
+                }} />
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div2 1s ease-in-out infinite'
+                }} />
+                <div style={{
+                  height: 20, width: 20, background: '#FE4A49', borderRadius: '50%',
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto',
+                  animation: 'ld1_div3 1s ease-in-out infinite'
+                }} />
+              </div>
+              <p style={{
+                color: '#fff', marginTop: 30, fontSize: 18, fontWeight: 600,
+                letterSpacing: '0.5px', textAlign: 'center'
+              }}>Generating Quotation...</p>
+            </>
+          )}
+          {savingPhase === 'success' && (
+            <div style={{
+              background: '#fff', borderRadius: 16, padding: '40px 50px',
+              textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+              animation: 'successPop 0.4s ease-out'
+            }}>
+              <div style={{ fontSize: 64, marginBottom: 12 }}>✅</div>
+              <h2 style={{ color: '#16a34a', fontSize: 22, marginBottom: 8 }}>Quotation Generated!</h2>
+              <p style={{ color: '#555', fontSize: 14 }}>Your quotation has been saved successfully.</p>
+            </div>
+          )}
+
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes ld1_div1 {
+              0%   { top: calc(50% + 52.5px); background: #FE4A49; }
+              50%  { top: calc(50% - 52.5px); background: #59CD90; }
+              100% { top: calc(50% + 52.5px); background: #009FB7; }
+            }
+            @keyframes ld1_div2 {
+              0%   { right: calc(50% - 52.5px); background: #FE4A49; }
+              50%  { right: calc(50% + 52.5px); background: #FED766; }
+              100% { right: calc(50% - 52.5px); background: #59CD90; }
+            }
+            @keyframes ld1_div3 {
+              0%   { left: calc(50% - 52.5px); background: #FE4A49; }
+              50%  { left: calc(50% + 52.5px); background: #D91E36; }
+              100% { left: calc(50% - 52.5px); background: #FE4A49; }
+            }
+            @keyframes successPop {
+              0%   { transform: scale(0.5); opacity: 0; }
+              100% { transform: scale(1);   opacity: 1; }
+            }
+          ` }} />
+        </div>
+      )}
+    </>
   );
 };
 
